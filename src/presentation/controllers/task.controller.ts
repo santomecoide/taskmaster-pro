@@ -49,7 +49,7 @@ export class TaskController {
   /** GET /tasks/:id */
   getById = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-      const dto = await this.useCases.getTaskById.execute(req.params.id);
+      const dto = await this.useCases.getTaskById.execute(req.params.id as string);
       res.json({ status: "success", data: dto });
     } catch (error) {
       next(error);
@@ -59,7 +59,7 @@ export class TaskController {
   /** PATCH /tasks/:id */
   update = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-      const dto = await this.useCases.updateTask.execute(req.params.id, req.body);
+      const dto = await this.useCases.updateTask.execute(req.params.id as string, req.body);
       res.json({ status: "success", data: dto });
     } catch (error) {
       next(error);
@@ -69,7 +69,7 @@ export class TaskController {
   /** DELETE /tasks/:id */
   delete = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-      await this.useCases.deleteTask.execute(req.params.id);
+      await this.useCases.deleteTask.execute(req.params.id as string);
       res.status(204).send();
     } catch (error) {
       next(error);

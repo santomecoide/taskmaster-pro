@@ -7,7 +7,7 @@ describe("GetTaskByIdUseCase", () => {
   const repo = createMockRepo();
   const useCase = new GetTaskByIdUseCase(repo);
 
-  afterEach(() => jest.clearAllMocks());
+  afterEach(() => { jest.clearAllMocks(); });
 
   it("should return a task DTO when the task exists", async () => {
     repo.findById.mockResolvedValue(fakeTask());

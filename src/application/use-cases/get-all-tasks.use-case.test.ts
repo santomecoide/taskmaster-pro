@@ -6,7 +6,7 @@ describe("GetAllTasksUseCase", () => {
   const repo = createMockRepo();
   const useCase = new GetAllTasksUseCase(repo);
 
-  afterEach(() => jest.clearAllMocks());
+  afterEach(() => { jest.clearAllMocks(); });
 
   it("should return all tasks as DTOs when no filter is given", async () => {
     const tasks = [

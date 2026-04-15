@@ -6,7 +6,7 @@ describe("CreateTaskUseCase", () => {
   const repo = createMockRepo();
   const useCase = new CreateTaskUseCase(repo);
 
-  afterEach(() => jest.clearAllMocks());
+  afterEach(() => { jest.clearAllMocks(); });
 
   it("should create a task and return a DTO", async () => {
     const task = fakeTask();

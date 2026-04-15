@@ -1,6 +1,12 @@
 import type { Request, Response, NextFunction } from "express";
-import { type AnyZodObject, ZodError } from "zod";
+import { type ZodType, ZodError } from "zod";
 import { ValidationError } from "../../shared/errors/app-error.js";
+
+interface ParsedRequest {
+  body?: Record<string, unknown>;
+  params?: Record<string, unknown>;
+  query?: Record<string, unknown>;
+}
 
 /**
  * Return Express middleware that validates req against the given Zod schema.
@@ -9,7 +15,7 @@ import { ValidationError } from "../../shared/errors/app-error.js";
  * @param schema - Zod object schema with optional body/params/query keys.
  * @returns Express middleware function.
  */
-export function validate(schema: AnyZodObject) {
+export function validate(schema: ZodType<ParsedRequest>) {
   return (req: Request, _res: Response, next: NextFunction): void => {
     try {
       const parsed = schema.parse({

@@ -7,7 +7,7 @@ describe("DeleteTaskUseCase", () => {
   const repo = createMockRepo();
   const useCase = new DeleteTaskUseCase(repo);
 
-  afterEach(() => jest.clearAllMocks());
+  afterEach(() => { jest.clearAllMocks(); });
 
   it("should delete the task without throwing", async () => {
     repo.delete.mockResolvedValue(true);

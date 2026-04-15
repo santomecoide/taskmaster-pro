@@ -7,7 +7,7 @@ describe("UpdateTaskUseCase", () => {
   const repo = createMockRepo();
   const useCase = new UpdateTaskUseCase(repo);
 
-  afterEach(() => jest.clearAllMocks());
+  afterEach(() => { jest.clearAllMocks(); });
 
   it("should update and return the task DTO", async () => {
     const existing = fakeTask();

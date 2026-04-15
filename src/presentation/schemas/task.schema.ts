@@ -9,12 +9,12 @@ const statusEnum = z.enum(
 export const createTaskSchema = z.object({
   body: z.object({
     title: z
-      .string({ required_error: "title is required" })
+      .string({ error: "title is required" })
       .trim()
       .min(1, "title must not be empty")
       .max(255, "title must be at most 255 characters"),
     description: z
-      .string({ required_error: "description is required" })
+      .string({ error: "description is required" })
       .trim()
       .min(1, "description must not be empty")
       .max(2000, "description must be at most 2000 characters"),
