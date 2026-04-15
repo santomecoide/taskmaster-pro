@@ -1,0 +1,46 @@
+---
+description: Testing conventions and best practices
+globs: "**/*.test.ts"
+alwaysApply: false
+---
+
+# Testing Standards
+
+## Framework
+
+- Use **Vitest** (or Jest) with TypeScript support.
+- Co-locate test files next to source: `foo.ts` → `foo.test.ts`.
+
+## Naming
+
+- `describe` blocks match the class/function name.
+- `it` blocks use the pattern: `it("should <expected behavior> when <condition>")`.
+
+## Structure
+
+Follow **Arrange → Act → Assert** in every test.
+
+```typescript
+it("should throw InvalidIdError when id is empty", () => {
+  // Arrange
+  const emptyId = "" as TaskId;
+
+  // Act
+  const act = () => getTask(emptyId);
+
+  // Assert
+  expect(act).toThrow(InvalidIdError);
+});
+```
+
+## Coverage
+
+- Unit-test all domain entities, value objects, and use cases.
+- Integration-test repository implementations against a real or in-memory DB.
+- Mock only infrastructure boundaries (DB, HTTP, file system) — never mock domain logic.
+
+## Principles
+
+- Tests must be deterministic — no reliance on wall-clock time or network.
+- Prefer dependency injection over module mocking.
+- One assertion per logical concept; multiple `expect` calls are fine if they verify the same behavior.

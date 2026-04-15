@@ -1,0 +1,19 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+/// Represents a task in the task management system.
+/// Status is constrained at the application layer to 'pending' | 'completed'.
+model Task {
+  id            String   @id @default(uuid())
+  title         String
+  description   String
+  status        String   @default("pending")
+  creation_date DateTime @default(now())
+
+  @@map("tasks")
+}

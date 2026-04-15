@@ -1,0 +1,37 @@
+---
+description: Clean Architecture layer conventions and dependency rules
+globs: "src/**/*.ts"
+alwaysApply: false
+---
+
+# Clean Architecture
+
+## Layer Structure
+
+```
+src/
+  domain/          # Entities, value objects, domain errors, repository interfaces
+  application/     # Use cases, DTOs, input/output ports, application services
+  infrastructure/  # DB adapters, HTTP clients, external service implementations
+  presentation/    # Controllers, routes, middleware, request/response mappers
+  shared/          # Cross-cutting: logger, config, common types, decorators
+```
+
+## Dependency Rule
+
+Dependencies point **inward only**:
+
+`presentation → application → domain` ← `infrastructure`
+
+- `domain` **MUST NOT** import from any other layer.
+- `application` depends only on `domain` interfaces — never on infrastructure.
+- `infrastructure` implements `domain` interfaces (Repository pattern).
+- `presentation` orchestrates via `application` use cases.
+
+## Key Patterns
+
+- **Entities** encapsulate business rules; validate invariants in constructors/factory methods.
+- **Use Cases** are single-responsibility classes with one public `execute` method.
+- **Repository interfaces** live in `domain`; implementations live in `infrastructure`.
+- **Dependency Injection**: wire dependencies at the composition root (`src/main.ts` or DI container). No `new ConcreteClass()` inside use cases.
+- **DTOs** cross layer boundaries — never pass raw entities to the presentation layer.

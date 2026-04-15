@@ -1,0 +1,43 @@
+---
+description: Professional documentation and JSDoc conventions
+globs: "**/*.ts"
+alwaysApply: false
+---
+
+# Documentation Standards
+
+## JSDoc
+
+Every exported symbol must have a JSDoc block with:
+
+- A **summary** sentence (imperative mood: "Create", "Return", not "Creates", "Returns").
+- `@param` for each parameter with type and purpose.
+- `@returns` describing the return value.
+- `@throws` for each expected exception.
+- `@example` for non-trivial public APIs.
+
+```typescript
+/**
+ * Retrieve a task by its unique identifier.
+ *
+ * @param id - Unique task identifier.
+ * @returns The matching task entity, or undefined if not found.
+ * @throws {InvalidIdError} When id format is invalid.
+ *
+ * @example
+ * const task = await getTask("abc-123" as TaskId);
+ */
+```
+
+## Inline Comments
+
+- Only explain **why**, never **what**. The code itself conveys the "what".
+- Mark technical debt with `// TODO(author):` and a linked issue number.
+
+## README
+
+- Keep a root `README.md` with: project overview, prerequisites, setup, scripts, architecture diagram, and environment variables.
+
+## Changelog
+
+- Maintain `CHANGELOG.md` following Keep a Changelog format.

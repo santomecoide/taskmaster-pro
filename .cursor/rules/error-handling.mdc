@@ -1,0 +1,44 @@
+---
+description: Error handling patterns and custom error hierarchy
+globs: "src/**/*.ts"
+alwaysApply: false
+---
+
+# Error Handling
+
+## Custom Error Hierarchy
+
+Define a base `AppError` in `src/shared/errors/`:
+
+```typescript
+export abstract class AppError extends Error {
+  abstract readonly statusCode: number;
+  abstract readonly isOperational: boolean;
+
+  constructor(message: string, options?: ErrorOptions) {
+    super(message, options);
+    this.name = this.constructor.name;
+  }
+}
+```
+
+Subclass per domain: `NotFoundError`, `ValidationError`, `ConflictError`, `UnauthorizedError`.
+
+## Rules
+
+- **Never** throw plain `Error` or string literals.
+- **Never** silently swallow errors with empty `catch` blocks.
+- Catch at the boundary (controller/middleware), log with context, and return a structured response.
+- Use `Result<TValue, TError>` pattern for expected failures in domain/application layers when exceptions are too heavy.
+
+```typescript
+type Result<TValue, TError = AppError> =
+  | { ok: true; value: TValue }
+  | { ok: false; error: TError };
+```
+
+## Logging
+
+- Log errors with structured data: `{ error: name, message, stack, context }`.
+- Log at `error` level for unexpected failures; `warn` for operational/expected errors.
+- Never log sensitive data (tokens, passwords, PII).

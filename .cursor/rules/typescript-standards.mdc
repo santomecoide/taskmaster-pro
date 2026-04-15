@@ -1,0 +1,39 @@
+---
+description: TypeScript coding standards and type safety conventions
+globs: "**/*.ts"
+alwaysApply: false
+---
+
+# TypeScript Standards
+
+## Strict Typing
+
+- Enable `strict: true` in tsconfig. Never weaken it with `skipLibCheck` in source code.
+- Define explicit return types on all exported functions and methods.
+- Prefer `interface` for object shapes; use `type` for unions, intersections, and mapped types.
+- Use `readonly` for properties that should not be reassigned after construction.
+- Use branded types for domain identifiers:
+
+```typescript
+type UserId = string & { readonly __brand: "UserId" };
+```
+
+## Enums & Constants
+
+- Prefer `as const` objects over `enum` for better tree-shaking and type inference.
+
+```typescript
+// Preferred
+const TaskStatus = { PENDING: "pending", DONE: "done" } as const;
+type TaskStatus = (typeof TaskStatus)[keyof typeof TaskStatus];
+```
+
+## Generics
+
+- Name generic parameters descriptively: `TEntity`, `TResult`, not just `T`.
+- Constrain generics with `extends` when a minimum shape is required.
+
+## Null Safety
+
+- Prefer `undefined` over `null` for optional values unless interfacing with external APIs.
+- Use optional chaining (`?.`) and nullish coalescing (`??`) instead of manual checks.

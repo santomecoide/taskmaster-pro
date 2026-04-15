@@ -1,0 +1,17 @@
+---
+description: Core project standards for taskmaster-pro — Node.js + TypeScript
+alwaysApply: true
+---
+
+# Project Standards
+
+- **Runtime**: Node.js (LTS). **Language**: TypeScript (strict mode).
+- **Module system**: ESM (`"type": "module"` in package.json).
+- **Package manager**: npm. Lock file must be committed.
+- Prefer `const` over `let`; never use `var`.
+- Use named exports; avoid default exports.
+- Every public function, class, and interface must have a JSDoc comment.
+- No `console.log` in production code — use a structured logger (e.g. pino/winston).
+- No `any` type. Use `unknown` and narrow with type guards when the type is truly unknown.
+- Ensure every `async` function has proper error handling or propagation.
+- Commit messages follow Conventional Commits (`feat:`, `fix:`, `chore:`, `docs:`, `test:`, `refactor:`).
